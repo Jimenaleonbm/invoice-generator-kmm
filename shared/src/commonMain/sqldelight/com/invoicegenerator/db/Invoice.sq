@@ -19,6 +19,9 @@ CREATE TABLE IF NOT EXISTS InvoiceItemEntity (
     FOREIGN KEY (invoiceId) REFERENCES InvoiceEntity(id) ON DELETE CASCADE
 );
 
+lastInsertRowId:
+SELECT last_insert_rowid();
+
 insertInvoice:
 INSERT INTO InvoiceEntity (number, clientId, clientName, issueDate, dueDate, notes, status)
 VALUES (?, ?, ?, ?, ?, ?, ?);

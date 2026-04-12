@@ -46,7 +46,7 @@ class ClientRepositoryImpl(driverFactory: DatabaseDriverFactory) : ClientReposit
             address = client.address,
             taxId = client.taxId
         )
-        return queries.getAllClients().executeAsList().last().id
+        return queries.lastInsertRowId().executeAsOne()
     }
 
     override suspend fun updateClient(client: Client) {

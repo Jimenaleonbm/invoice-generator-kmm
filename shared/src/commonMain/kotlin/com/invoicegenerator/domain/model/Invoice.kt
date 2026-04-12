@@ -1,7 +1,5 @@
 package com.invoicegenerator.domain.model
 
-import kotlin.math.roundToInt
-
 /**
  * Represents an invoice with line items and client information.
  */

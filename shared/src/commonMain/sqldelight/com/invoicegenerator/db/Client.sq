@@ -7,6 +7,9 @@ CREATE TABLE IF NOT EXISTS ClientEntity (
     taxId TEXT NOT NULL DEFAULT ''
 );
 
+lastInsertRowId:
+SELECT last_insert_rowid();
+
 insertClient:
 INSERT INTO ClientEntity (name, email, phone, address, taxId)
 VALUES (?, ?, ?, ?, ?);

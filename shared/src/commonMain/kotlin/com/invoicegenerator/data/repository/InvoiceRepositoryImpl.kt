@@ -73,7 +73,7 @@ class InvoiceRepositoryImpl(driverFactory: DatabaseDriverFactory) : InvoiceRepos
             notes = invoice.notes,
             status = invoice.status.name
         )
-        val insertedId = queries.getAllInvoices().executeAsList().last().id
+        val insertedId = queries.lastInsertRowId().executeAsOne()
         invoice.items.forEach { item ->
             queries.insertInvoiceItem(
                 invoiceId = insertedId,
