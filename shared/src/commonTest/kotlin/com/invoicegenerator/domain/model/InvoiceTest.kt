@@ -65,4 +65,29 @@ class InvoiceTest {
 
         assertEquals(450.0, item.total)
     }
+
+    @Test
+    fun `new invoice has id zero before persistence`() {
+        val invoice = Invoice(
+            number = "INV-004",
+            clientId = 1L,
+            clientName = "Test Client",
+            issueDate = "2024-01-01",
+            dueDate = "2024-01-31"
+        )
+        assertEquals(0L, invoice.id)
+    }
+
+    @Test
+    fun `invoice with existing id is treated as update candidate`() {
+        val invoice = Invoice(
+            id = 42L,
+            number = "INV-005",
+            clientId = 1L,
+            clientName = "Existing Client",
+            issueDate = "2024-01-01",
+            dueDate = "2024-01-31"
+        )
+        assert(invoice.id > 0) { "Invoice with id > 0 should trigger an update" }
+    }
 }

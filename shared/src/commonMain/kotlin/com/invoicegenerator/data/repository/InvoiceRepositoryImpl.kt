@@ -64,6 +64,10 @@ class InvoiceRepositoryImpl(driverFactory: DatabaseDriverFactory) : InvoiceRepos
     }
 
     override suspend fun saveInvoice(invoice: Invoice): Long {
+        if (invoice.id > 0) {
+            updateInvoice(invoice)
+            return invoice.id
+        }
         queries.insertInvoice(
             number = invoice.number,
             clientId = invoice.clientId,

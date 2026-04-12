@@ -39,6 +39,10 @@ class ClientRepositoryImpl(driverFactory: DatabaseDriverFactory) : ClientReposit
     }
 
     override suspend fun saveClient(client: Client): Long {
+        if (client.id > 0) {
+            updateClient(client)
+            return client.id
+        }
         queries.insertClient(
             name = client.name,
             email = client.email,
