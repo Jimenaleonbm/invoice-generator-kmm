@@ -1,0 +1,48 @@
+CREATE TABLE IF NOT EXISTS InvoiceEntity (
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    number TEXT NOT NULL,
+    clientId INTEGER NOT NULL,
+    clientName TEXT NOT NULL,
+    issueDate TEXT NOT NULL,
+    dueDate TEXT NOT NULL,
+    notes TEXT NOT NULL DEFAULT '',
+    status TEXT NOT NULL DEFAULT 'DRAFT'
+);
+
+CREATE TABLE IF NOT EXISTS InvoiceItemEntity (
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    invoiceId INTEGER NOT NULL,
+    description TEXT NOT NULL,
+    quantity REAL NOT NULL,
+    unitPrice REAL NOT NULL,
+    taxRate REAL NOT NULL DEFAULT 0.0,
+    FOREIGN KEY (invoiceId) REFERENCES InvoiceEntity(id) ON DELETE CASCADE
+);
+
+insertInvoice:
+INSERT INTO InvoiceEntity (number, clientId, clientName, issueDate, dueDate, notes, status)
+VALUES (?, ?, ?, ?, ?, ?, ?);
+
+updateInvoice:
+UPDATE InvoiceEntity
+SET number = ?, clientId = ?, clientName = ?, issueDate = ?, dueDate = ?, notes = ?, status = ?
+WHERE id = ?;
+
+deleteInvoice:
+DELETE FROM InvoiceEntity WHERE id = ?;
+
+getInvoiceById:
+SELECT * FROM InvoiceEntity WHERE id = ?;
+
+getAllInvoices:
+SELECT * FROM InvoiceEntity ORDER BY issueDate DESC;
+
+insertInvoiceItem:
+INSERT INTO InvoiceItemEntity (invoiceId, description, quantity, unitPrice, taxRate)
+VALUES (?, ?, ?, ?, ?);
+
+deleteItemsByInvoiceId:
+DELETE FROM InvoiceItemEntity WHERE invoiceId = ?;
+
+getItemsByInvoiceId:
+SELECT * FROM InvoiceItemEntity WHERE invoiceId = ?;

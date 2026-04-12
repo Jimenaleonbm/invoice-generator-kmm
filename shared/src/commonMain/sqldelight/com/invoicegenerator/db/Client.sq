@@ -1,0 +1,26 @@
+CREATE TABLE IF NOT EXISTS ClientEntity (
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    email TEXT NOT NULL,
+    phone TEXT NOT NULL DEFAULT '',
+    address TEXT NOT NULL DEFAULT '',
+    taxId TEXT NOT NULL DEFAULT ''
+);
+
+insertClient:
+INSERT INTO ClientEntity (name, email, phone, address, taxId)
+VALUES (?, ?, ?, ?, ?);
+
+updateClient:
+UPDATE ClientEntity
+SET name = ?, email = ?, phone = ?, address = ?, taxId = ?
+WHERE id = ?;
+
+deleteClient:
+DELETE FROM ClientEntity WHERE id = ?;
+
+getClientById:
+SELECT * FROM ClientEntity WHERE id = ?;
+
+getAllClients:
+SELECT * FROM ClientEntity ORDER BY name ASC;
